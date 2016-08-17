@@ -1,0 +1,2080 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "2.0.0",
+        "title": "ProFcee",
+        "description": "ProFcee API Explorer"
+    },
+    "host": "130.211.184.92",
+    "basePath": "/api/v2",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json",
+        "text/html",
+        "image/jpeg"
+    ],
+    "produces": [
+        "application/json",
+        "text/html",
+        "image/jpeg"
+    ],
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Signup new user",
+                "parameters": [
+                    {
+                        "name": "user_email",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "user_name",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "user_pass",
+                        "in": "query",
+                        "type": "string",
+                        "format": "password",
+                        "required": true
+                    },
+                    {
+                        "name": "user_device_token",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "user_device_type",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create a new user",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/auth": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Authenticate user",
+                "parameters": [
+                    {
+                        "name": "user_email",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user email",
+                        "required": true
+                    },
+                    {
+                        "name": "user_pass",
+                        "in": "query",
+                        "description": "user password",
+                        "type": "string",
+                        "format": "password",
+                        "required": true
+                    },
+                    {
+                        "name": "user_device_type",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user device type",
+                        "required": true
+                    },
+                    {
+                        "name": "user_device_token",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user device token",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get authorized user",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/social": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Authenticate user",
+                "parameters": [
+                    {
+                        "name": "user_email",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user email",
+                        "required": true
+                    },
+                    {
+                        "name": "user_name",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user name",
+                        "required": true
+                    },
+                    {
+                        "name": "user_avatar_url",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user email",
+                        "required": false
+                    },
+                    {
+                        "name": "user_pass",
+                        "in": "query",
+                        "description": "user password",
+                        "type": "string",
+                        "format": "password",
+                        "required": true
+                    },
+                    {
+                        "name": "user_device_type",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user device type",
+                        "required": true
+                    },
+                    {
+                        "name": "user_device_token",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user device token",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get authorized user",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/forgot/password": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Send reset code to user email address",
+                "parameters": [
+                    {
+                        "name": "user_email",
+                        "in": "query",
+                        "description": "user email address",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sent reset code to user email address",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/reset/password": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Reset user password",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "reset code",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "user_pass",
+                        "in": "query",
+                        "format": "password",
+                        "description": "user new password",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reset your code successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/update/password": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user password",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "current_pass",
+                        "in": "query",
+                        "description": "current password",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "new_pass",
+                        "in": "query",
+                        "format": "password",
+                        "description": "new password",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update user password",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/update": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "type": "string",
+                        "description": "user name",
+                        "required": false
+                    },
+                    {
+                        "name": "organisation",
+                        "in": "formData",
+                        "type": "string",
+                        "description": "user organisation",
+                        "required": false
+                    },
+                    {
+                        "name": "designation",
+                        "in": "formData",
+                        "type": "string",
+                        "description": "user designation",
+                        "required": false
+                    },
+                    {
+                        "name": "city_id",
+                        "in": "formData",
+                        "type": "integer",
+                        "description": "user city id",
+                        "required": false
+                    },
+                    {
+                        "name": "city",
+                        "in": "formData",
+                        "type": "string",
+                        "description": "user city",
+                        "required": false
+                    },
+                    {
+                        "name": "dob",
+                        "in": "formData",
+                        "type": "string",
+                        "format": "date",
+                        "description": "user birthday",
+                        "required": false
+                    },
+                    {
+                        "name": "gender",
+                        "in": "formData",
+                        "type": "string",
+                        "description": "user gender",
+                        "required": false
+                    },
+                    {
+                        "name": "profile_image",
+                        "in": "formData",
+                        "type": "file",
+                        "description": "user profile image",
+                        "required": false
+                    },
+                    {
+                        "name": "banner_image",
+                        "in": "formData",
+                        "type": "file",
+                        "description": "user banner image",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "update user password",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/deactivate": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Deactivate user",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deactivate user",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/verify/email": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Verify user email",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "type": "string",
+                        "description": "email activation code",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Verify user email",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                  "User"
+                ],
+                "summary": "Get user by id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user by id",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/trends": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user trends",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user trends",
+                        "schema": {
+                            "$ref": "#/definitions/Trend"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/agreed/trends": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user agreed trends",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user agreed trends",
+                        "schema": {
+                            "$ref": "#/definitions/Trend"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/logout": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Logout user",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/countries": {
+            "get": {
+                "tags": [
+                    "Country"
+                ],
+                "summary": "Get all countries",
+                "parameters": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all countries",
+                        "schema": {
+                            "$ref": "#/definitions/Country"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/countries/{id}": {
+            "get": {
+                "tags": [
+                    "Country"
+                ],
+                "summary": "Get country with id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the country",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get country with id",
+                        "schema": {
+                            "$ref": "#/definitions/Country"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/states": {
+            "get": {
+                "tags": [
+                    "State"
+                ],
+                "summary": "Get all country states",
+                "parameters": [
+                    {
+                        "name": "country_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "ID of country",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all country states",
+                        "schema": {
+                            "$ref": "#/definitions/State"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/states/{id}": {
+            "get": {
+                "tags": [
+                    "State"
+                ],
+                "summary": "Get state with country id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the state",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get state with country id",
+                        "schema": {
+                            "$ref": "#/definitions/State"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/cities": {
+            "get": {
+                "tags": [
+                    "City"
+                ],
+                "summary": "Get all state cities",
+                "parameters": [
+                    {
+                        "name": "state_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "ID of state",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all state cities",
+                        "schema": {
+                            "$ref": "#/definitions/City"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/cities/{id}": {
+            "get": {
+                "tags": [
+                    "City"
+                ],
+                "summary": "Get city with state id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the state",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get city with state id",
+                        "schema": {
+                            "$ref": "#/definitions/City"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/trends": {
+            "post": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Create New Trend",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "trend_body",
+                        "in": "formData",
+                        "type": "string",
+                        "description": "trend body text",
+                        "required": true
+                    },
+                    {
+                        "name": "trend",
+                        "in": "formData",
+                        "type": "file",
+                        "description": "trend image",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create New Trend",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Get trends without user",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Get trends without user",
+                        "schema": {
+                            "$ref": "#/definitions/Trend"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/trends/guest/toprated": {
+            "get": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Get top rated trends without user",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Get top rated trends without user",
+                        "schema": {
+                            "$ref": "#/definitions/Trend"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/trends/picks": {
+            "get": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Get user picks",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get top rated trends without user",
+                        "schema": {
+                            "$ref": "#/definitions/Trend"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/trends/toprated": {
+            "get": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Get user top rated trends",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get top rated trends without user",
+                        "schema": {
+                            "$ref": "#/definitions/Trend"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/trends/{id}": {
+            "get": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Get trend by id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the trend",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get trend by id",
+                        "schema": {
+                            "$ref": "#/definitions/Trend"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Delete trend by id",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the trend",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete trend by id",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/trends/{id}/agree": {
+            "patch": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Agree Trend",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the trend",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Agree Trend",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/trends/{id}/share": {
+            "patch": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Share Trend",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the trend",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Share Trend",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/trends/{id}/report": {
+            "patch": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Report Trend",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the trend",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Report Trend",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/trends/{id}/agrees": {
+            "get": {
+                "tags": [
+                    "Trend"
+                ],
+                "summary": "Get Trend Agreed Users",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the trend",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Trend Agreed Users",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/notifications": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get User All Notifications",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get User All Notifications",
+                        "schema": {
+                            "$ref": "#/definitions/Notification"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Mark User All Notifications as read",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mark User All Notifications as read",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Clear User All Notifications",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Clear User All Notifications",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/notifications/{id}": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get User Notification",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the notification",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get User Notification",
+                        "schema": {
+                            "$ref": "#/definitions/Notification"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Clear User All Notifications",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the notification",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Remove user Notification",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/settings": {
+            "get": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Get User Settings",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get User Settings",
+                        "schema": {
+                            "$ref": "#/definitions/Settings"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Update User Settings",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "settings",
+                        "in": "body",
+                        "description": "The settings JSON you want to update",
+                        "schema": {
+                            "$ref": "#/definitions/Settings"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get User Settings",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/messages": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Create user chat rooms",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "user_ids",
+                        "in": "query",
+                        "description": "The JSON of user ids",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "trend_id",
+                        "in": "query",
+                        "description": "Trend id",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "First message",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create user chat rooms",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/chatrooms": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get user chat rooms",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user chat rooms",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/reply/{id}": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get reply by Id",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the reply",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get reply by Id",
+                        "schema": {
+                            "$ref": "#/definitions/Reply"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+            "tags": [
+              "Messages"
+            ],
+            "summary": "Remove message",
+            "parameters": [
+              {
+                "name": "AccessToken",
+                "in": "header",
+                "type": "string",
+                "description": "User Access Token",
+                "required": true
+              },
+              {
+                "name": "id",
+                "in": "path",
+                "type": "integer",
+                "description": "ID of the reply",
+                "required": true
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Remove message",
+                "schema": {
+                  "$ref": "#/definitions/Result"
+                }
+              },
+              "400": {
+                "description": "Unexpected error",
+                "schema": {
+                  "$ref": "#/definitions/Error"
+                }
+              }
+            }
+          },
+            "patch": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Mark reply as read",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the reply",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mark reply as read",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/{id}": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Send new reply",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the conversation",
+                        "required": true
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Reply text",
+                        "required": true
+                    },
+                    {
+                        "name": "user_name",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Sender user name",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Send new reply",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Get all messages",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the conversation",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all messages",
+                        "schema": {
+                            "$ref": "#/definitions/Reply"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Remove chat room",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the conversation",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Remove chat room",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/{id}/block": {
+            "patch": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Block this chat room",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the conversation",
+                        "required": true
+                    },
+                    {
+                        "name": "user_name",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Sender user name",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Block this chat room",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/search": {
+            "get": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "Search User or Trend",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "type": "string",
+                        "description": "search keyword",
+                        "required": true
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "search type: 0 => SEARCH_USER_BY_NAME, 1 => SEARCH_USER_BY_EMAIL, 2 => SEARCH_TREND_BY_KEYWORD, 3 => SEARCH_TREND_BY_REGION",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get User Settings",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/push": {
+            "post": {
+                "tags": [
+                    "Push"
+                ],
+                "summary": "Send push to user for test",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Send push to user for test",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "format": "password"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "dob": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "organization": {
+                    "type": "string"
+                },
+                "designation": {
+                    "type": "string"
+                },
+                "profile_image": {
+                    "type": "string"
+                },
+                "banner_image": {
+                    "type": "string"
+                },
+                "city_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Country": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sortname": {
+                    "type": "string"
+                }
+            }
+        },
+        "State": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "country_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                }
+            }
+        },
+        "City": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "state_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "Latitude": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "Longitude": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "TimeZone": {
+                    "type": "string"
+                },
+                "Code": {
+                    "type": "string"
+                }
+            }
+        },
+        "Trend": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "agrees": {
+                    "type": "integer"
+                },
+                "deleted": {
+                    "type": "integer"
+                },
+                "share": {
+                    "type": "integer"
+                },
+                "toprated": {
+                    "type": "integer"
+                },
+                "pick": {
+                    "type": "integer"
+                },
+                "city_id": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string"
+                }
+            }
+        },
+        "Notification": {
+            "type": "object",
+            "properties": {
+                "notification_id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "owner_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "user_name": {
+                    "type": "string"
+                },
+                "user_avatar": {
+                    "type": "string"
+                },
+                "notification_text": {
+                    "type": "string"
+                },
+                "is_read": {
+                    "type": "integer"
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Settings": {
+            "type": "object",
+            "properties": {
+                "agree_post": {
+                    "type": "integer"
+                },
+                "shares": {
+                    "type": "integer"
+                },
+                "reports": {
+                    "type": "integer"
+                },
+                "toprated": {
+                    "type": "integer"
+                },
+                "new_products": {
+                    "type": "integer"
+                },
+                "participation": {
+                    "type": "integer"
+                },
+                "interesting": {
+                    "type": "integer"
+                },
+                "use_word": {
+                    "type": "integer"
+                },
+                "use_spell": {
+                  "type": "integer"
+                }
+            }
+        },
+        "Reply": {
+            "type": "object",
+            "properties": {
+                "conversation_id": {
+                    "type": "integer"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "is_read": {
+                    "type": "integer"
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Result": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
